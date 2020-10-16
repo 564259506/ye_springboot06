@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" th:href="@{|/css/bootstrap.css|}">
+    <script type="text/javascript" th:src="@{|/js/jquery-1.12.4.js|}"></script>
+    <script type="text/javascript" th:src="@{|/js/bootstrap.js|}"></script>
+</head>
+<body>
+    <div class="container">
+        <br> <br>
+        <table class="table table-bordered table-striped">
+            <caption>
+                <a th:href="@{|/showAddUser|}" class="btn btn-success btn-lg">添加用户</a>
+            </caption>
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>昵称</th>
+                    <th>电话</th>
+                    <th>地址</th>
+                    <th>邮箱</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${list}" th:inline="text">
+                    <td>[[${user.id}]]</td>
+                    <td>[[${user.nick}]]</td>
+                    <td>[[${user.phone}]]</td>
+                    <td>[[${user.address}]]</td>
+                    <td>[[${user.email}]]</td>
+                    <td>
+                        <a th:href="@{|/showUpdateUser?id=${user.id}|}" class="btn btn-primary btn-sm">修改</a>
+                        <a th:href="@{|/delete/user?id=${user.id}|}" class="btn btn-danger btn-sm">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6" class="text-center">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li>
+                                    <a th:href="@{|/index?currPage=1|}" aria-label="Previous">
+                                        <span aria-hidden="true">首页</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{|/index?currPage=${currPage == 1 ? 1 : (currPage-1)}|}" aria-label="Previous">
+                                        <span aria-hidden="true">上一页</span>
+                                    </a>
+                                </li>
+                                <li th:each="num:${pageLabelArr}">
+                                    <a th:href="@{|/index?currPage=${numStat.count}|}" th:text="${numStat.count}"></a>
+                                </li>
+                                <li>
+                                    <a th:href="@{|/index?currPage=${currPage == totalPage ? totalPage : (currPage+1)}|}" aria-label="Next">
+                                        <span aria-hidden="true">下一页</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{|/index?currPage=${totalPage}|}" aria-label="Next">
+                                        <span aria-hidden="true">尾页</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+</html>
